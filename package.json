@@ -1,0 +1,17 @@
+{
+  "name": "gastos-simples",
+  "version": "1.0.0",
+  "description": "Backend simples para leitura de notas com IA (Express)",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^6.10.0"
+  }
+}
