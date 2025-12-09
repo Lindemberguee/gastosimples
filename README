@@ -1,74 +1,188 @@
-<h1 align="center">🧾 Gastos Simples – Leitor de Notas com IA</h1>
+# 🧾 Gastos Simples – Leitor de Notas com IA (Express + OpenAI)
 
-<p align="center">
-  Sistema inteligente para leitura automática de notas fiscais utilizando a visão computacional do <strong>OpenAI GPT-4o</strong>.
-</p>
+Projeto simples e poderoso para **analisar automaticamente notas fiscais** usando a API da **OpenAI (GPT-4o-mini)**.  
+Basta enviar uma imagem ou PDF de uma nota → o sistema extrai:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Node.js-18.x-green?style=for-the-badge&logo=node.js&logoColor=white">
-  <img src="https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge&logo=express&logoColor=white">
-  <img src="https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple?style=for-the-badge&logo=openai&logoColor=white">
-  <img src="https://img.shields.io/badge/Status-Ativo-success?style=for-the-badge">
-  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge">
-</p>
+- Estabelecimento  
+- Data  
+- Total  
+- Forma de pagamento  
+- Itens comprados (nome, quantidade, valor)  
+- Categoria do gasto  
+- Identificadores do recibo  
 
-<p align="center">
-  <a href="#-sobre-o-projeto">Sobre</a> •
-  <a href="#-tecnologias">Tecnologias</a> •
-  <a href="#-instalação-e-uso">Instalação</a> •
-  <a href="#-documentação-da-api">API Docs</a> •
-  <a href="#-roadmap">Roadmap</a> •
-  <a href="#-autor">Autor</a>
-</p>
+Ideal para controle financeiro pessoal, automação de gastos, integração com ERP, ou dashboards de consumo.
 
 ---
 
-## 📌 Sobre o Projeto
+## 🚀 Tecnologias Utilizadas
 
-**Gastos Simples** é uma API Backend robusta capaz de analisar **notas fiscais (imagens ou PDF)** através de Inteligência Artificial e retornar dados estruturados prontos para uso.
-
-Diferente de sistemas tradicionais de OCR (que apenas leem texto), este projeto utiliza o modelo **GPT-4o-mini Vision** para *interpretar* o contexto da nota, permitindo extrair informações mesmo de documentos não padronizados, amassados, com baixa qualidade ou em línguas estrangeiras.
-
-### 🧩 O que o sistema extrai?
-O sistema devolve um JSON padronizado contendo:
-- 🏢 **Estabelecimento** (Nome da loja/mercado)
-- 📅 **Data** da compra
-- 💰 **Total** da nota
-- 💳 **Forma de pagamento**
-- 🛒 **Itens** (Lista detalhada com nome, quantidade e valor)
-- 🏷️ **Categoria** (Sugerida pela IA, ex: Alimentação, Transporte)
-
-### 🎯 Casos de Uso
-- Controle financeiro pessoal
-- Dashboards de gestão de despesas
-- ERPs e Automação Contábil
-- Auditoria de reembolsos corporativos
-
----
-
-## 🚀 Tecnologias
-
-O projeto foi desenvolvido com foco em performance e simplicidade:
-
-- **[Node.js](https://nodejs.org/)** - Runtime JavaScript
-- **[Express.js](https://expressjs.com/)** - Framework Web
-- **[Multer](https://github.com/expressjs/multer)** - Middleware para upload de arquivos
-- **[OpenAI API](https://platform.openai.com/)** - Inteligência Artificial (GPT-4o-mini)
-- **CORS & Dotenv** - Segurança e Configuração
+- **Node.js**
+- **Express.js** — servidor HTTP
+- **Multer** — upload de arquivos
+- **OpenAI API** — análise inteligente da nota
+- **CORS / Dotenv**
+- **JavaScript puro (sem TypeScript)**
 
 ---
 
 ## 📁 Estrutura do Projeto
 
-```bash
 /gastos-simples
 ├── src
-│   ├── index.js           # Ponto de entrada da aplicação
-│   ├── routes
-│   │   ├── health.js      # Rota de verificação de status
-│   │   └── notas.js       # Rota principal de processamento
-│   └── services
-│       └── openai.js      # Integração com a API da OpenAI
-├── .env                   # Variáveis de ambiente (não versionado)
+│ ├── index.js
+│ ├── routes
+│ │ ├── health.js
+│ │ └── notas.js
+│ └── services
+│ └── openai.js
+├── .env
 ├── package.json
 └── README.md
+
+yaml
+Copiar código
+
+---
+
+## ⚙️ Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/Lindemberguee/gastosimples
+Entre na pasta:
+
+bash
+Copiar código
+cd gastos-simples
+Instale dependências:
+
+bash
+Copiar código
+npm install
+Crie o arquivo .env:
+
+env
+Copiar código
+OPENAI_API_KEY=sua_chave_aqui
+Dica: modelos com visão só funcionam se sua conta OpenAI tiver créditos ativos.
+
+▶️ Como Executar
+Rodar servidor:
+
+bash
+Copiar código
+npm run dev
+O serviço ficará disponível em:
+
+arduino
+Copiar código
+http://localhost:4001
+📡 Rotas da API
+🔍 Health Check
+bash
+Copiar código
+GET /api/health
+Retorno:
+
+json
+Copiar código
+{
+  "status": "ok",
+  "uptime": 8.22,
+  "timestamp": "2025-12-09T18:00:00.000Z"
+}
+🧾 Analisar Nota Fiscal
+bash
+Copiar código
+POST /api/analisar-nota
+Body (multipart/form-data):
+csharp
+Copiar código
+file: <imagem ou PDF da nota>
+Exemplo via Insomnia/Postman:
+
+Tipo: POST
+
+Body → form-data
+
+Campo file → selecione o arquivo
+
+📤 Exemplo de Resposta
+json
+Copiar código
+{
+  "estabelecimento": "HAPPY MART",
+  "data": "10/07/2020",
+  "cnpj": "98788822",
+  "total": 8.18,
+  "categoria": "Supermercado",
+  "formaPagamento": "PAY FROM PRIMARY",
+  "itens": [
+    {
+      "nome": "PEANUTS",
+      "quantidade": 1,
+      "valor": 2.46
+    },
+    {
+      "nome": "TOMATOES",
+      "quantidade": 1,
+      "valor": 4.98
+    }
+  ]
+}
+🧠 Como Funciona?
+A imagem enviada é:
+
+Convertida para Base64
+
+Enviada para o modelo GPT-4o-mini via image_url
+
+O modelo extrai informações estruturadas
+
+Retorna um JSON validado por schema
+
+🎯 Tudo isso sem necessidade de OCR tradicional!
+
+🗺️ Roadmap / Próximos Passos
+ Salvar notas em banco de dados (MongoDB ou SQLite)
+
+ Dashboard de gastos mensais
+
+ Classificação automática do tipo de compra
+
+ Upload via frontend (Next.js)
+
+ Validação de duplicidade de recibos
+
+ Exportação para Excel
+
+ Deploy (Railway, Render, Vercel, AWS)
+
+📜 Licença
+MIT — livre para uso e modificação.
+
+🙋 Autor
+Desenvolvido por José Lindembergue
+Se quiser ver outros projetos:
+https://github.com/SEU_USUARIO
+
+yaml
+Copiar código
+
+---
+
+# 🎉 Está pronto!
+
+Se quiser, posso:
+
+✅ gerar a **versão em inglês**  
+✅ adicionar **badges (npm, node, status, stars)**  
+✅ colocar **prints do Insomnia**  
+✅ gerar **LICENSE**  
+✅ preparar para deploy no Railway / Render  
+
+---
+
+# ❓ Quer que eu gere o README já com seu nome de usuário do GitHub e prepare o commit inicial?
