@@ -1,209 +1,74 @@
 <h1 align="center">🧾 Gastos Simples – Leitor de Notas com IA</h1>
 
-<p align="center">Sistema inteligente para leitura automática de notas fiscais usando Express + OpenAI (GPT-4o Vision).</p>
+<p align="center">
+  Sistema inteligente para leitura automática de notas fiscais utilizando a visão computacional do <strong>OpenAI GPT-4o</strong>.
+</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Node.js-18.x-green?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge">
-  <img src="https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Node.js-18.x-green?style=for-the-badge&logo=node.js&logoColor=white">
+  <img src="https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge&logo=express&logoColor=white">
+  <img src="https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple?style=for-the-badge&logo=openai&logoColor=white">
   <img src="https://img.shields.io/badge/Status-Ativo-success?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge">
+</p>
+
+<p align="center">
+  <a href="#-sobre-o-projeto">Sobre</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-instalação-e-uso">Instalação</a> •
+  <a href="#-documentação-da-api">API Docs</a> •
+  <a href="#-roadmap">Roadmap</a> •
+  <a href="#-autor">Autor</a>
 </p>
 
 ---
 
 ## 📌 Sobre o Projeto
 
-**Gastos Simples** é um backend capaz de analisar **notas fiscais (imagem ou PDF)** usando IA e retornar dados estruturados como:
+**Gastos Simples** é uma API Backend robusta capaz de analisar **notas fiscais (imagens ou PDF)** através de Inteligência Artificial e retornar dados estruturados prontos para uso.
 
-- Estabelecimento  
-- Data  
-- Total  
-- Forma de pagamento  
-- Itens (nome, quantidade, valor)  
-- Categoria  
+Diferente de sistemas tradicionais de OCR (que apenas leem texto), este projeto utiliza o modelo **GPT-4o-mini Vision** para *interpretar* o contexto da nota, permitindo extrair informações mesmo de documentos não padronizados, amassados, com baixa qualidade ou em línguas estrangeiras.
 
-Usando **GPT‑4o‑mini Vision**, o sistema extrai informações mesmo de notas não padronizadas, borradas ou estrangeiras.
+### 🧩 O que o sistema extrai?
+O sistema devolve um JSON padronizado contendo:
+- 🏢 **Estabelecimento** (Nome da loja/mercado)
+- 📅 **Data** da compra
+- 💰 **Total** da nota
+- 💳 **Forma de pagamento**
+- 🛒 **Itens** (Lista detalhada com nome, quantidade e valor)
+- 🏷️ **Categoria** (Sugerida pela IA, ex: Alimentação, Transporte)
 
-Ideal para:
-
-- Controle financeiro  
-- Dashboards de gastos  
-- ERPs  
-- Aparelhos mobile  
-- Auditorias  
-- Robôs de automação
+### 🎯 Casos de Uso
+- Controle financeiro pessoal
+- Dashboards de gestão de despesas
+- ERPs e Automação Contábil
+- Auditoria de reembolsos corporativos
 
 ---
 
 ## 🚀 Tecnologias
 
-- Node.js  
-- Express.js  
-- Multer  
-- OpenAI API  
-- CORS  
-- Dotenv  
-- JavaScript  
+O projeto foi desenvolvido com foco em performance e simplicidade:
+
+- **[Node.js](https://nodejs.org/)** - Runtime JavaScript
+- **[Express.js](https://expressjs.com/)** - Framework Web
+- **[Multer](https://github.com/expressjs/multer)** - Middleware para upload de arquivos
+- **[OpenAI API](https://platform.openai.com/)** - Inteligência Artificial (GPT-4o-mini)
+- **CORS & Dotenv** - Segurança e Configuração
 
 ---
 
 ## 📁 Estrutura do Projeto
 
-```
+```bash
 /gastos-simples
 ├── src
-│   ├── index.js
+│   ├── index.js           # Ponto de entrada da aplicação
 │   ├── routes
-│   │   ├── health.js
-│   │   └── notas.js
+│   │   ├── health.js      # Rota de verificação de status
+│   │   └── notas.js       # Rota principal de processamento
 │   └── services
-│       └── openai.js
-├── .env
+│       └── openai.js      # Integração com a API da OpenAI
+├── .env                   # Variáveis de ambiente (não versionado)
 ├── package.json
 └── README.md
-```
-
----
-
-## ⚙️ Instalação
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/Lindemberguee/gastosimples
-```
-
-### 2. Entre na pasta
-
-```bash
-cd gastos-simples
-```
-
-### 3. Instale dependências
-
-```bash
-npm install
-```
-
-### 4. Configure a chave da OpenAI
-
-Crie o arquivo `.env`:
-
-```
-OPENAI_API_KEY=sua_chave_aqui
-```
-
-⚠️ Modelos com visão exigem créditos ativos.
-
----
-
-## ▶️ Executar o Servidor
-
-```bash
-npm run dev
-```
-
-A API ficará disponível em:
-
-```
-http://localhost:4001
-```
-
----
-
-## 📡 Rotas da API
-
-### 🔍 Health Check
-
-```
-GET /api/health
-```
-
-Retorno:
-
-```json
-{
-  "status": "ok",
-  "uptime": 5.12,
-  "timestamp": "2025-12-09T18:00:00.000Z"
-}
-```
-
----
-
-### 🧾 Analisar Nota Fiscal
-
-```
-POST /api/analisar-nota
-```
-
-Envio (multipart/form-data):
-
-```
-file: <imagem ou PDF>
-```
-
-Exemplo no Insomnia/Postman:
-
-- Método: POST  
-- Body → form-data  
-- Campo **file** → selecione arquivo  
-
----
-
-## 📤 Exemplo de Resposta
-
-```json
-{
-  "estabelecimento": "HAPPY MART",
-  "data": "10/07/2020",
-  "cnpj": "98788822",
-  "total": 8.18,
-  "categoria": "Supermercado",
-  "formaPagamento": "PAY FROM PRIMARY",
-  "itens": [
-    { "nome": "PEANUTS", "quantidade": 1, "valor": 2.46 },
-    { "nome": "TOMATOES", "quantidade": 1, "valor": 4.98 }
-  ]
-}
-```
-
----
-
-## 🧠 Funcionamento Interno
-
-1. A imagem é convertida para Base64  
-2. Enviada ao GPT‑4o-mini pelo parâmetro `image_url`  
-3. A IA interpreta e extrai dados textuais  
-4. O backend valida e retorna JSON estruturado  
-5. Tudo sem OCR tradicional — apenas visão computacional da IA  
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Persistência em banco (MongoDB / SQLite / Postgres)  
-- [ ] Dashboard (Next.js)  
-- [ ] Categorias automáticas de gastos  
-- [ ] Verificação de duplicidade  
-- [ ] Exportação Excel  
-- [ ] Deploy (Railway / Render / AWS / Vercel)  
-- [ ] Suporte a múltiplos usuários/login  
-
----
-
-## 📜 Licença
-
-Projeto distribuído sob a licença **MIT**.
-
----
-
-## 🙋 Autor
-
-Desenvolvido por **José Lindembergue**  
-🔗 GitHub: https://github.com/Lindemberguee  
-
----
-
-<p align="center">🚀 Uma solução simples, moderna e pronta para evoluir!</p>
