@@ -1,0 +1,209 @@
+<h1 align="center">🧾 Gastos Simples – Leitor de Notas com IA</h1>
+
+<p align="center">Sistema inteligente para leitura automática de notas fiscais usando Express + OpenAI (GPT-4o Vision).</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18.x-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Status-Ativo-success?style=for-the-badge">
+  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge">
+</p>
+
+---
+
+## 📌 Sobre o Projeto
+
+**Gastos Simples** é um backend capaz de analisar **notas fiscais (imagem ou PDF)** usando IA e retornar dados estruturados como:
+
+- Estabelecimento  
+- Data  
+- Total  
+- Forma de pagamento  
+- Itens (nome, quantidade, valor)  
+- Categoria  
+
+Usando **GPT‑4o‑mini Vision**, o sistema extrai informações mesmo de notas não padronizadas, borradas ou estrangeiras.
+
+Ideal para:
+
+- Controle financeiro  
+- Dashboards de gastos  
+- ERPs  
+- Aparelhos mobile  
+- Auditorias  
+- Robôs de automação
+
+---
+
+## 🚀 Tecnologias
+
+- Node.js  
+- Express.js  
+- Multer  
+- OpenAI API  
+- CORS  
+- Dotenv  
+- JavaScript  
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+/gastos-simples
+├── src
+│   ├── index.js
+│   ├── routes
+│   │   ├── health.js
+│   │   └── notas.js
+│   └── services
+│       └── openai.js
+├── .env
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Instalação
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/Lindemberguee/gastosimples
+```
+
+### 2. Entre na pasta
+
+```bash
+cd gastos-simples
+```
+
+### 3. Instale dependências
+
+```bash
+npm install
+```
+
+### 4. Configure a chave da OpenAI
+
+Crie o arquivo `.env`:
+
+```
+OPENAI_API_KEY=sua_chave_aqui
+```
+
+⚠️ Modelos com visão exigem créditos ativos.
+
+---
+
+## ▶️ Executar o Servidor
+
+```bash
+npm run dev
+```
+
+A API ficará disponível em:
+
+```
+http://localhost:4001
+```
+
+---
+
+## 📡 Rotas da API
+
+### 🔍 Health Check
+
+```
+GET /api/health
+```
+
+Retorno:
+
+```json
+{
+  "status": "ok",
+  "uptime": 5.12,
+  "timestamp": "2025-12-09T18:00:00.000Z"
+}
+```
+
+---
+
+### 🧾 Analisar Nota Fiscal
+
+```
+POST /api/analisar-nota
+```
+
+Envio (multipart/form-data):
+
+```
+file: <imagem ou PDF>
+```
+
+Exemplo no Insomnia/Postman:
+
+- Método: POST  
+- Body → form-data  
+- Campo **file** → selecione arquivo  
+
+---
+
+## 📤 Exemplo de Resposta
+
+```json
+{
+  "estabelecimento": "HAPPY MART",
+  "data": "10/07/2020",
+  "cnpj": "98788822",
+  "total": 8.18,
+  "categoria": "Supermercado",
+  "formaPagamento": "PAY FROM PRIMARY",
+  "itens": [
+    { "nome": "PEANUTS", "quantidade": 1, "valor": 2.46 },
+    { "nome": "TOMATOES", "quantidade": 1, "valor": 4.98 }
+  ]
+}
+```
+
+---
+
+## 🧠 Funcionamento Interno
+
+1. A imagem é convertida para Base64  
+2. Enviada ao GPT‑4o-mini pelo parâmetro `image_url`  
+3. A IA interpreta e extrai dados textuais  
+4. O backend valida e retorna JSON estruturado  
+5. Tudo sem OCR tradicional — apenas visão computacional da IA  
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Persistência em banco (MongoDB / SQLite / Postgres)  
+- [ ] Dashboard (Next.js)  
+- [ ] Categorias automáticas de gastos  
+- [ ] Verificação de duplicidade  
+- [ ] Exportação Excel  
+- [ ] Deploy (Railway / Render / AWS / Vercel)  
+- [ ] Suporte a múltiplos usuários/login  
+
+---
+
+## 📜 Licença
+
+Projeto distribuído sob a licença **MIT**.
+
+---
+
+## 🙋 Autor
+
+Desenvolvido por **José Lindembergue**  
+🔗 GitHub: https://github.com/Lindemberguee  
+
+---
+
+<p align="center">🚀 Uma solução simples, moderna e pronta para evoluir!</p>
